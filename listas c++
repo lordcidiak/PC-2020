@@ -1,4 +1,6 @@
 //Juan Pablo Sanchez Gaitan
+
+//taller de pc de listas
 #include <iostream>
 #include <stdlib.h>
 #include <string.h>
