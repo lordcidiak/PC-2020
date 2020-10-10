@@ -1,0 +1,331 @@
+//Juan Pablo Sanchez Gaitan
+#include <iostream>
+#include <stdlib.h>
+#include <string.h>
+using namespace std;
+ 
+struct nodo{
+       char* nro =new char();
+	   char* ape1=new char(); 
+	   char* ape2=new char();         // en este caso es un numero entero
+       struct nodo *sgte;
+};
+
+struct sLista{
+	int* cabnomb;
+	int* cabape1;
+	int* cabape2;
+	int tam;
+};
+
+
+typedef struct nodo *Tlista;
+
+void insertarInicio(Tlista &listaNomb,Tlista &listaApe1,Tlista &listaApe2);
+void reportarListaNombres(Tlista listaNomb);
+void reportarListaApellido1(Tlista listaApe1);
+void reportarListaApellido2(Tlista listaApe2);
+void ordenarListaNombres(Tlista &listaNomb);
+void ordenarListaApellido1(Tlista &listaApe1);
+void ordenarListaApellido2(Tlista &listaApe2);
+
+ 
+void menu1()
+{
+    cout<<"\n\t\tLISTA ENLAZADA SIMPLE\n\n";
+    cout<<" 1. INSERTAR AL INICIO               "<<endl;
+    cout<<" 2. ORGANIZAR LISTAS                 "<<endl;
+    cout<<" 3. IMPRIMIR LISTAS SIN ORDENAR      "<<endl;
+    cout<<" 4. IMPRIMIR LISTAS ORDENADAS        "<<endl;
+    cout<<"\n INGRESE OPCION: ";
+}
+ 
+ 
+/*                        Funcion Principal
+---------------------------------------------------------------------*/
+ 
+int main()
+{
+    Tlista listaNomb = NULL;
+    Tlista listaApe1 = NULL;
+    Tlista listaApe2 = NULL;
+    Tlista listaNombcop = NULL;
+    Tlista listaApe1cop = NULL;
+    Tlista listaApe2cop = NULL;
+    sLista listamayor;
+    int op;
+	int opi;     // opcion del menu
+    int pos=0;    // posicion a insertar
+ 
+ 
+    system("color 0b");
+ 
+    do
+    {
+        menu1();  cin>> op;
+ 
+        switch(op)
+        {
+            case 1:
+            	insertarInicio(listaNomb,listaApe1,listaApe2);
+            	listaNombcop = listaNomb;
+     listaApe1cop = listaApe1;
+           listaApe2cop = listaApe2;
+            break;
+ 
+ 
+            case 2:
+            	
+            	
+            	
+            	cout<<"\n\n\tLista ordenada..."<<endl;
+            break;
+ 
+ 
+            case 3:
+ 
+                
+				cout<<"QUE LISTA QUIERE IMPRIMIR?"<<endl;
+                 cout<<"1. LISTA DE NOMBRES ORGANIZADA"<<endl;
+                 cout<<"2. LISTA DE APELLIDO 1 ORGANIZADA"<<endl;
+                 cout<<"3. LISTA DE APELLIDOS 2 ORGANIZADA"<<endl;
+                 cin>>opi;
+                 if(opi == 1){
+                 	reportarListaNombres(listaNombcop);
+				 }
+				 if(opi==2){				 
+				 reportarListaApellido1(listaApe1cop);}
+				 if(opi==3){
+				 	reportarListaApellido2(listaApe2cop);
+				 }
+            break;
+ 
+ 
+            case 4:
+   				cout<<"QUE LISTA QUIERE IMPRIMIR?"<<endl;
+                 cout<<"1. LISTA DE NOMBRES ORGANIZADA"<<endl;
+                 cout<<"2. LISTA DE APELLIDO 1 ORGANIZADA"<<endl;
+                 cout<<"3. LISTA DE APELLIDOS 2 ORGANIZADA"<<endl;
+                 cin>>opi;
+                 if(opi == 1){
+                 	ordenarListaNombres(listaNomb);
+                 	reportarListaNombres(listaNomb);
+				 }
+				 if(opi==2){				 
+				 ordenarListaApellido1(listaApe1);
+				 reportarListaApellido1(listaApe1);}
+				 if(opi==3){
+				 	ordenarListaApellido2(listaApe2);
+				 	reportarListaApellido2(listaApe2);
+				 }
+            break;
+     
+                    }
+ 
+        cout<<endl<<endl;
+        system("pause");  system("cls");
+ 
+    }while(op!=5);
+ 
+ 
+   system("pause");
+   return 0;
+}
+void ordenarListaApellido2(Tlista &listaApe2)
+{
+     Tlista actual , siguiente;
+    
+     char* t;
+     char* ape1;
+     char* ape2;
+     actual = listaApe2;
+     while(actual->sgte != NULL)
+     {
+          siguiente = actual->sgte;
+          
+          while(siguiente!=NULL)
+          {
+                 if(strcmp(actual->ape2,siguiente->ape2) == 0)
+               {
+               	cout<<"1"<<endl;
+                    t = siguiente->nro;
+                    ape1 = siguiente->ape1;
+                    ape2 = siguiente->ape2;
+                    siguiente->nro = actual->nro;
+                    siguiente->ape1 = actual->ape1;
+                    siguiente->ape2 = actual->ape2;
+                    actual->nro = t;
+					actual->ape1 = ape1;  
+					actual->ape2 = ape2;        
+               }
+               if(strcmp(actual->ape2,siguiente->ape2) ==-1)
+               {
+               	
+                    t = siguiente->nro;
+                    ape1 = siguiente->ape1;
+                    ape2 = siguiente->ape2;
+                    siguiente->nro = actual->nro;
+                    siguiente->ape1 = actual->ape1;
+                    siguiente->ape2 = actual->ape2;
+                    actual->nro = t;
+					actual->ape1 = ape1;  
+					actual->ape2 = ape2;
+               }
+               siguiente = siguiente->sgte;                    
+          }    
+          actual = actual->sgte;
+          siguiente = actual->sgte;
+           
+     }
+     
+     
+}
+void ordenarListaApellido1(Tlista &listaApe1)
+{
+     Tlista actual , siguiente;
+     char* t;
+     char* ape1;
+     char* ape2;
+     actual = listaApe1;
+     while(actual->sgte != NULL)
+     {
+          siguiente = actual->sgte;
+          
+          while(siguiente!=NULL)
+          {
+                if(strcmp(actual->ape1,siguiente->ape1) == 0)
+               {
+               	cout<<"1"<<endl;
+                    t = siguiente->nro;
+                    ape1 = siguiente->ape1;
+                    ape2 = siguiente->ape2;
+                    siguiente->nro = actual->nro;
+                    siguiente->ape1 = actual->ape1;
+                    siguiente->ape2 = actual->ape2;
+                    actual->nro = t;
+					actual->ape1 = ape1;  
+					actual->ape2 = ape2;        
+               }
+               if(strcmp(actual->ape1,siguiente->ape1) ==-1)
+               {
+               	
+                    t = siguiente->nro;
+                    ape1 = siguiente->ape1;
+                    ape2 = siguiente->ape2;
+                    siguiente->nro = actual->nro;
+                    siguiente->ape1 = actual->ape1;
+                    siguiente->ape2 = actual->ape2;
+                    actual->nro = t;
+					actual->ape1 = ape1;  
+					actual->ape2 = ape2;
+               }
+               siguiente = siguiente->sgte;                    
+          }    
+          actual = actual->sgte;
+          siguiente = actual->sgte;
+           
+     }
+}
+void ordenarListaNombres(Tlista &listaNomb)
+{
+     Tlista actual , siguiente,j;
+     char* t;
+     char* ape1;
+     char* ape2;
+     const char* pal1;
+	 const char*pal2;
+     actual = listaNomb;
+     while(actual->sgte != NULL)
+     {
+           siguiente = actual->sgte;
+          
+          while(siguiente!=NULL)
+          {
+          	
+               if(strcmp(actual->nro,siguiente->nro) == 0)
+               {
+               	cout<<"1"<<endl;
+                    t = siguiente->nro;
+                    ape1 = siguiente->ape1;
+                    ape2 = siguiente->ape2;
+                    siguiente->nro = actual->nro;
+                    siguiente->ape1 = actual->ape1;
+                    siguiente->ape2 = actual->ape2;
+                    actual->nro = t;
+					actual->ape1 = ape1;  
+					actual->ape2 = ape2;        
+               }
+               if(strcmp(actual->nro,siguiente->nro) ==-1)
+               {
+               	
+                    t = siguiente->nro;
+                    ape1 = siguiente->ape1;
+                    ape2 = siguiente->ape2;
+                    siguiente->nro = actual->nro;
+                    siguiente->ape1 = actual->ape1;
+                    siguiente->ape2 = actual->ape2;
+                    actual->nro = t;
+					actual->ape1 = ape1;  
+					actual->ape2 = ape2;
+               }
+               siguiente = siguiente->sgte;                    
+          }    
+          actual = actual->sgte;
+          siguiente = actual->sgte;
+           
+     }
+     
+    
+}
+void reportarListaApellido2(Tlista listaApe2)
+{
+     int i = 0;
+ cout<<"lista de apellidos 2"<<endl;
+     while(listaApe2 != NULL)
+     {
+          cout <<' '<< i+1 <<") " << listaApe2->nro <<"   "<<listaApe2->ape1<<"   "<<listaApe2->ape2<< endl;
+          listaApe2 = listaApe2->sgte;
+          i++;
+     }
+}
+ void reportarListaNombres(Tlista listaNomb)
+{
+     int i = 0;
+ cout<<"lista de nombres"<<endl;
+     while(listaNomb != NULL)
+     {
+          cout <<' '<< i+1 <<") " << listaNomb->nro <<"   "<<listaNomb->ape1<<"   "<<listaNomb->ape2<< endl;
+          listaNomb = listaNomb->sgte;
+          i++;
+     }
+}
+void reportarListaApellido1(Tlista listaApe1)
+{
+     int i = 0;
+ cout<<"lista de apellidos 1"<<endl;
+     while(listaApe1 != NULL)
+     {
+          cout <<' '<< i+1 <<") " << listaApe1->nro <<"   "<<listaApe1->ape1<<"   "<<listaApe1->ape2<< endl;
+          listaApe1 = listaApe1->sgte;
+          i++;
+     }
+}
+void insertarInicio(Tlista &listaNomb,Tlista &listaApe1,Tlista &listaApe2)
+{
+    Tlista q;
+    q = new nodo();
+ 	   
+  cout<<"ingresa el nombre"<<endl;
+	cin>>q->nro;
+	cout<<"ingresa el apellido"<<endl;
+    cin>>q->ape1;
+  cout<<"ingresa el apellido 2"<<endl;
+    cin>>q->ape2;
+    
+    q->sgte = listaNomb;
+    listaNomb  = q;
+    q->sgte = listaApe1;
+    listaApe1  = q;
+    q->sgte = listaApe2;
+    listaApe2  = q;
+}
